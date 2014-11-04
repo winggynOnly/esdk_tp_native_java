@@ -1,0 +1,153 @@
+<div class="inoutput_param_div" style="height: 335px;">
+	<table width="100%">
+		<tr>
+			<td width="10%"><label languageTag="input"></label>
+			</td>
+			<td></td>
+			<td width="32%"></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td align="left" width="15%">
+				<font color='red'>*</font>
+				<label languageTag="numberPerPage"></label>
+			</td>
+			<td align="left">
+				<input type="text" id="numberPerPage" name="numberPerPage" value="">
+			</td>
+			<td align="left"><span class="span_tip" id="numberPerPageErrTip"></span></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td align="left" width="15%">
+				<font color='red'>*</font>
+				<label languageTag="currentPage"></label>
+			</td>
+			<td align="left">
+				<input type="text" id="currentPage" name="currentPage" value="">
+			</td>
+			<td align="left"><span class="span_tip" id="currentPageErrTip"></span></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td align="left" width="15%">
+				<label languageTag="focusItem"></label>
+			</td>
+			<td align="left">
+				<input type="text" id="focusItem" name="focusItem" value="">
+			</td>
+			<td align="left"><span class="span_tip" id="focusItemErrTip"></span></td>
+		</tr>
+		
+					
+		<tr>
+		<td></td>
+		<td colspan="2" align="left">
+			<a id="querySitesByCondition_addSortItem" onclick="table_addRow(this)" languageTag="addSortItem" class="btn_login add_icon_btn" style="float: left;margin: 15px 0 0 0;">增加会场</a>
+			<table id="querySitesByCondition_addSortItem_table" style="display: none;margin-top: 45px;">
+				<thead>
+				<tr><td style="width: 130px"><label languageTag="sortItem_sort"></label></td>
+				<td style="width: 130px"><label languageTag="sortItem_itemIndex"></label></td>
+				<td align="center">操作</td></tr>
+				</thead>
+				<tbody>
+				<tr style="display: none;">
+				<td>
+					<select class="input_in_table">
+						<option value="0">升序</option>
+						<option value="1">降序</option>
+					</select>
+				</td>
+				<td>					
+					<select class="input_in_table">
+						<option value="0">会场名称</option>
+						<option value="1">会场URI</option>
+						<option value="2">会场状态</option>
+						<option value="3">会场类型</option>
+						<option value="4">会议模板名称</option>
+						<option value="5">会议模板接入号</option>
+						<option value="6">MCU名称</option>
+					</select>
+				</td>
+				<td align="center"><a class="btn_login del_icon_btn" onclick="table_delRow(this)"></a> </td></tr>
+				</tbody>
+			</table>
+			
+		</td>
+		<td></td>
+		</tr>
+		
+		<tr>
+		<td></td>
+		<td colspan="2" align="left">
+			<a id="querySitesByCondition_addStringFilter" onclick="table_addRow(this)" languageTag="addStringFilter" class="btn_login add_icon_btn" style="float: left;margin: 15px 0 0 0;">增加会场</a>
+			<table id="querySitesByCondition_addStringFilter_table" style="display: none;margin-top: 45px;">
+				<thead>
+				<tr><td style="width: 130px"><label languageTag="stringFilter_columnIndex"></label></td>
+				<td style="width: 130px"><label languageTag="stringFilter_value"></label></td>
+				<td align="center">操作</td></tr>
+				</thead>
+				<tbody>
+				<tr style="display: none;">
+				<td>
+					<select class="input_in_table">
+						<option value="0">会场名称</option>
+						<option value="1">会场URI</option>
+						<option value="2">会场状态</option>
+						<option value="3">会场类型</option>
+						<option value="4">会议模板名称</option>
+						<option value="5">会议模板接入号</option>
+						<option value="6">MCU名称</option>
+					</select>
+				
+				</td>
+				<td><input type="text" value="" class="input_in_table"> </td>
+				<td align="center"><a class="btn_login del_icon_btn" onclick="table_delRow(this)"></a> </td></tr>
+				</tbody>
+			</table>
+			
+		</td>
+		<td></td>
+		</tr>
+	
+		<tr>
+			<td colspan="2"></td>
+			<td align="left">
+				<a id="querySitesByCondition" class="btn_login" style="margin-top: 15px;" languageTag="querySitesByCondition"></a>
+			</td>
+			<td></td>
+		</tr>
+	</table>
+</div>
+
+<div class="hr_horizontal_inoutputdiv">
+	<hr class="hr_horizontal_inoutput" noshade>
+</div>
+
+<div class="inoutput_param_div">
+	<table width="100%">
+		<tr>
+			<td width="11%"><label languageTag="output"></label>
+			</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td align="left" width="14%"><label languageTag="resultCode"></label>
+			</td>
+			<td align="left"><input type="text" id="querySitesByCondition_resultCode"
+				 readonly="readonly">
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td align="left" valign="top"><label languageTag="resultContext"></label>
+			</td>
+			<td align="left"><textarea type="text" id="querySitesByCondition_resultContext"
+					 			 readonly="readonly"></textarea>
+			</td>
+		</tr>
+	</table>
+</div>

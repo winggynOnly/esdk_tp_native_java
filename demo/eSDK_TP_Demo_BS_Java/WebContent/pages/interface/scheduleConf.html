@@ -1,0 +1,195 @@
+<ul class="block">
+	<li>
+		<div id="scheduleConf_desc" class="description_div">
+			<!-- append description -->
+		</div>
+	</li>
+</ul>
+<ul>
+	<li>
+		<div id="scheduleConf_execution">
+			<!-- append execution code -->
+		</div>
+	</li>
+</ul>
+<ul>
+	<li>
+		<div id="scheduleConf_src" class="sourcecode_div">
+			<!-- append source code -->
+		</div>
+	</li>
+</ul>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$.ajax({
+			type : "get",
+			cache : false,
+			url : getServerPath()+"/pages/description/scheduleConf_desc.html",
+			async : false,
+			success : function(data) {
+				$("#scheduleConf_desc").html(data);
+			}
+		});
+		
+		$.ajax({
+			type : "get",
+			cache : false,
+			url : getServerPath()+"/pages/execution/scheduleConf_execution.html",
+			async : false,
+			success : function(data) {
+				$("#scheduleConf_execution").html(data);
+			}
+		});
+		
+		$.ajax({
+			type : "get",
+			cache : false,
+			url : getServerPath()+"/pages/sourcecode/scheduleConf_src.html",
+			async : false,
+			success : function(data) {
+				$("#scheduleConf_src").html(data);
+			}
+		});
+		
+		$("#scheduleConf").click(function(){
+			$("#confNameErrTip").html("");
+			$("#beginTimeErrTip").html("");
+			$("#durationErrTip").html("");
+			$("#accessCodeErrTip").html("");
+			$("#passwordErrTip").html("");
+			$("#cpResouceErrTip").html("");
+			$("#rateErrTip").html("");
+			$("#isRecordingErrTip").html("");
+			$("#isLiveBroadcastErrTip").html("");
+			$("#chairmanPasswordErrTip").html("");
+			
+
+			$("#scheduleConf_status").html("");
+			
+			$("#confNameErrTip").removeAttr("languageTag");
+			$("#beginTimeErrTip").removeAttr("languageTag");
+			$("#durationErrTip").removeAttr("languageTag");
+			$("#accessCodeErrTip").removeAttr("languageTag");
+			$("#passwordErrTip").removeAttr("languageTag");
+			$("#cpResouceErrTip").removeAttr("languageTag");
+			$("#rateErrTip").removeAttr("languageTag");
+			$("#isRecordingErrTip").removeAttr("languageTag");
+			$("#isLiveBroadcastErrTip").removeAttr("languageTag");
+			$("#chairmanPasswordErrTip").removeAttr("languageTag");
+
+			
+			$("#confName").removeClass("input_error");
+			$("#beginTime").removeClass("input_error");
+			$("#duration").removeClass("input_error");
+			$("#accessCode").removeClass("input_error");
+			$("#password").removeClass("input_error");
+			$("#cpResouce").removeClass("input_error");
+			$("#rateErrTip").removeClass("input_error");
+			$("#isRecording").removeClass("input_error");
+			$("#isLiveBroadcast").removeClass("input_error");
+			$("#chairmanPassword").removeClass("input_error");
+
+			
+			var confName = $("#confName").val();
+			var beginTime = $("#beginTime").val();
+			var duration = $("#duration").val();
+			var accessCode = $("#accessCode").val();
+			var password = $("#password").val();
+			var cpResouce = $("#cpResouce").val();
+			var rate = $("#rate").val();
+			var isRecording = $("#isRecording").val();
+			var isLiveBroadcast = $("#isLiveBroadcast").val();
+			var chairmanPassword = $("#chairmanPassword").val();
+
+			var sites = new Array();
+			var sitesData = $("#scheduleConf_addSite_table tbody tr");
+			for(var i = 0; i < sitesData.size() - 1; i++){
+				var siteData = sitesData.eq(i).find(".input_in_table");
+				var site = {};
+
+				site.name = siteData.eq(0).val();
+				site.uri = siteData.eq(1).val();
+				site.type = siteData.eq(2).val();
+		
+				sites.push(site);
+			}
+			
+			//参数校验 开始
+			if (isEmpty(confName))
+			{
+				$("#confNameErrTip").attr("languageTag", "confNameNull");
+				$("#confNameErrTip").html(controller.language.titles["confNameNull"]);
+				$("#confName").focus();
+				$("#confName").addClass("input_error");
+				return false;
+			}
+			
+			if (isEmpty(beginTime))
+			{
+				$("#beginTimeErrTip").attr("languageTag", "beginTimeNull");
+				$("#beginTimeErrTip").html(controller.language.titles["beginTimeNull"]);
+				$("#beginTime").focus();
+				$("#beginTime").addClass("input_error");
+				return false;
+			}
+
+			if (isDate(beginTime))
+			{
+				$("#beginTimeErrTip").attr("languageTag", "beginTimeError");
+				$("#beginTimeErrTip").html(controller.language.titles["beginTimeError"]);
+				$("#beginTime").focus();
+				$("#beginTime").addClass("input_error");
+				return false;
+			}
+
+			if (isEmpty(duration))
+			{
+				$("#durationErrTip").attr("languageTag", "durationNull");
+				$("#durationErrTip").html(controller.language.titles["durationNull"]);
+				$("#duration").focus();
+				$("#duration").addClass("input_error");
+				return false;
+			}
+			
+			if (!isNumber(duration))
+			{
+				$("#durationErrTip").attr("languageTag", "durationError");
+				$("#durationErrTip").html(controller.language.titles["durationError"]);
+				$("#duration").focus();
+				$("#duration").addClass("input_error");
+				return false;
+			}
+			//参数校验 结束
+			
+			$.ajax({
+				url : getServerPath()+"/scheduleConfServlet",
+				type : "post",
+				dataType : "json",
+				data : "confName=" + confName + "&beginTime=" + beginTime + "&duration=" + duration
+						+ "&accessCode=" + accessCode + "&password=" + password + "&cpResouce=" + cpResouce + "&rate=" + rate + 
+						"&isRecording=" + isRecording + "&isLiveBroadcast=" + isLiveBroadcast + "&chairmanPassword=" + chairmanPassword
+						 + "&sites=" + JSON.stringify(sites),
+				async : false,
+				success : function(data)
+				{
+					var response = JSON.parse(data)
+					$("#scheduleConf_resultCode").val(response.resultCode);
+					$("#scheduleConf_resultContext").val(JSON.stringify(response.result));
+				},
+				error : function(data)
+				{
+					$("#scheduleConf_resultCode").val(res);
+					$("#scheduleConf_resultContext").val("");
+					
+				},
+				beforeSend : function()
+				{
+					$("#scheduleConf_resultCode").val("");
+					$("#scheduleConf_resultContext").val("");
+				}
+			});
+		});
+	
+	});
+</script>

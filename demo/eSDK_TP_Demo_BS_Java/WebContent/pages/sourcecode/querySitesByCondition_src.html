@@ -1,0 +1,176 @@
+<div>
+	<label style="font-weight: bold;">QuerySitesByConditionServlet.class:</label>
+	<br><br>
+	<label style="font-weight: bold;"><img src="/eSDK_TP_Demo_BS_Java_HCC/pic/description.jpg"></label>
+	<br><br>
+	<label style="font-weight: bold;" languageTag="sourceCodeDesc"></label>
+	<br><br>
+	<span style='color:#7F0055;font-weight:bold;'>package</span><span style='color:black;'> com.huawei.esdk.tp.demo.servlet;</span>
+	<br><br>
+    <span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> java.io.IOException;</span>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> java.io.PrintWriter;</span>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> java.util.ArrayList;</span>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> java.util.List;</span>
+	<br>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> javax.servlet.ServletException;</span>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> javax.servlet.http.HttpServlet;</span>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> javax.servlet.http.HttpServletRequest;</span>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> javax.servlet.http.HttpServletResponse;</span>
+	<br>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> org.apache.log4j.Logger;</span>
+	<br>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> com.google.gson.Gson;</span>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> com.google.gson.internal.StringMap;</span>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> com.huawei.esdk.tp.demo.factory.ServiceFactory;</span>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> com.huawei.esdk.tp.demo.utils.DateUtils;</span>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> com.huawei.esdk.tp.demo.utils.DurationUtils;</span>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> com.huawei.esdk.tp.demo.utils.PropertiesUtils;</span>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> com.huawei.esdk.tp.professional.local.authentication.AuthorizeServiceEx;</span>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> com.huawei.esdk.tp.professional.local.bean.FiltersEx;</span>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> com.huawei.esdk.tp.professional.local.bean.PageParamEx;</span>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> com.huawei.esdk.tp.professional.local.bean.QueryConfigEx;</span>
+		<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> com.huawei.esdk.tp.professional.local.bean.QuerySitesByConditionExResponse;</span>
+		<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> com.huawei.esdk.tp.professional.local.bean.SortItemsEx;</span>
+		<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> com.huawei.esdk.tp.professional.local.bean.StringFilterEx;</span>
+		<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> com.huawei.esdk.tp.professional.local.bean.TPSDKResponseEx;</span>
+	<br><br>
+	<span style='color:#3F5FBF;'>
+		/**<br>
+		 * 会场处理类<br> 
+		 * 用于条件查询会场列表<br> 
+	 	 * <br> 
+	 	 * @author　xxxxxx<br> 
+	 	 * @see　[无]<br> 
+	 	 * @since　[eSDK TP V100R003C30]<br> 
+	 	 */</span><br> 
+	<span style='color:#7F0055;font-weight:bold;'>public class</span> QuerySitesByConditionServlet <span style='color:#7F0055;font-weight:bold;'>extends</span> HttpServlet<br> 
+	{<br> 
+	　　<span style='color:#3F5FBF;'>
+		/**<br> 
+	　　  * 序列号<br> 
+	　　  */</span><br> 
+	　　<span style='color:#7F0055;font-weight:bold;'>private static final long</span> <span style="color:#0000C0;font-style:italic;">serialVersionUID</span> = 5053679104100767687L;<br> 
+	　　<br> 
+	　　<span style='color:#3F5FBF;'>
+		/**<br> 
+	　　 * log日志对象<br> 
+	　　 */</span><br> 
+	　　<span style='color:#7F0055;font-weight:bold;'>private static final</span> Logger <span style="color:#0000C0;font-style:italic;">LOGGER</span> = Logger.getLogger(QuerySitesByConditionServlet.<span style='color:#7F0055;font-weight:bold;'>class</span>);<br> 
+	　　<br> 
+	　　<span style='color:#3F5FBF;'>
+		/**<br> 
+	　　 * Gson，用于进行对象和json之间的转换<br> 
+	　　 */</span><br> 
+	　　<span style='color:#7F0055;font-weight:bold;'>private static final</span> Gson <span style="color:#0000C0;font-style:italic;">GSON</span> = <span style='color:#7F0055;font-weight:bold;'>new</span> Gson();<br> 
+	　　<br> 
+	　　<span style="color:#646464;">@Override</span><br> 
+	　　<span style='color:#7F0055;font-weight:bold;'>protected void</span> doPost(HttpServletRequest request, HttpServletResponse response)<br> 
+	　　　　<span style='color:#7F0055;font-weight:bold;'>throws</span> ServletException, IOException<br> 
+	　　{<br> 
+	　　　　<span style='color:#3F7F5F;'>// 获取页面入参</span><br> 
+	　　　　String numberPerPage = request.getParameter(<span style="color:#0000C0;">"numberPerPage"</span>);<br>  
+	　　　　String currentPage = request.getParameter(<span style="color:#0000C0;">"currentPage"</span>);<br>
+	　　　　String focusItem = request.getParameter(<span style="color:#0000C0;">"focusItem"</span>);<br><br>
+	
+	　　　　String sortItemsStr = request.getParameter(<span style="color:#0000C0;">"sortItems"</span>);<br>
+	　　　　String filtersStr = request.getParameter(<span style="color:#0000C0;">"filters"</span>);<br><br>
+
+	　　　　List&lt;StringMap&lt;String&gt;&gt; sortItemInfos = GSON.fromJson(sortItemsStr, <span style='color:#7F0055;font-weight:bold;'>new</span> ArrayList&lt;StringMap&lt;String&gt;&gt;().getClass()); 
+	　　　　<br>
+	　　　　List&lt;StringMap&lt;String&gt;&gt; filterInfos = GSON.fromJson(filtersStr, <span style='color:#7F0055;font-weight:bold;'>new</span> ArrayList&lt;StringMap&lt;String&gt;&gt;().getClass()); 
+	　　　　<br><br>
+
+	　　　　QueryConfigEx queryConfig = <span style='color:#7F0055;font-weight:bold;'>new</span> QueryConfigEx();<br> 
+	　　　　PageParamEx pageParam = <span style='color:#7F0055;font-weight:bold;'>new</span> PageParamEx();<br> 
+	　　　　pageParam.setCurrentPage(Integer.parseInt(currentPage));<br> 
+	　　　　pageParam.setNumberPerPage(Integer.parseInt(numberPerPage));<br>  
+	　　　　queryConfig.setPageParam(pageParam);<br> 
+
+	　　　　<span style='color:#7F0055;font-weight:bold;'>if</span> 
+	　　　　<br>
+	　　　　{<br>
+	　　　　　　queryConfig.setFocusItem(Integer.parseInt(focusItem));<br>
+	　　　　}<br><br>
+
+	　　　　List&lt;SortItemsEx&gt; sortItems = <span style='color:#7F0055;font-weight:bold;'>new</span> ArrayList&lt;SortItemsEx&gt;();
+	　　　　<br><br>
+	　　　　<span style='color:#7F0055;font-weight:bold;'>for</span>(StringMap<String> stringMap : sortItemInfos) 
+	　　　　<br>
+	　　　　{<br> 
+	　　　　　　SortItemsEx sortitem = <span style='color:#7F0055;font-weight:bold;'>new</span> SortItemsEx();<br>
+	　　　　　　sortitem.setItemIndex(Integer.parseInt(stringMap.get("itemIndex")));<br>
+	　　　　　　sortitem.setSort(Integer.parseInt(stringMap.get("sort")));<br>
+	　　　　　　sortItems.add(sortitem);<br>
+	　　　　}<br><br>	
+	
+	　　　　queryConfig.setSortItems(sortItems);<br><br> 
+	
+	　　　　List&lt;FiltersEx&gt; filters = <span style='color:#7F0055;font-weight:bold;'>new</span> ArrayList&lt;FiltersEx&gt;();
+	　　　　<br><br>
+	　　　　<span style='color:#7F0055;font-weight:bold;'>for</span>(StringMap<String> stringMap : filterInfos) 
+	　　　　<br>
+	　　　　{<br> 
+	　　　　　　StringFilterEx stringFilter = <span style='color:#7F0055;font-weight:bold;'>new</span> StringFilterEx();<br>
+	　　　　　　stringFilter.setColumnIndex(Integer.parseInt(stringMap.get("columnIndex")));<br>
+	　　　　　　stringFilter.setValue(stringMap.get("value"));<br>
+	　　　　　　filters.add(stringFilter);<br>
+	　　　　}<br>
+	　　　　queryConfig.setFilters(filters);<br><br>	
+
+	
+	　　　　<span style='color:#3F7F5F;'>// 调用业务接口前需要鉴权</span><br>
+	　　　　AuthorizeServiceEx authorizeServiceEx = ServiceFactory.getAuthorizeServiceEx();<br>
+	　　　　Integer errcode = authorizeServiceEx.login(PropertiesUtils.getValue("userName"),<br>
+	　　　　 　　PropertiesUtils.getValue("password"));<br><br> 
+
+	　　　　<span style='color:#7F0055;font-weight:bold;'>if</span>(0 != errcode)<br> 
+	　　　　{<br> 
+	　　　　　　<span style='color:#3F7F5F;'>// 输出流</span><br> 
+	　　　　　　PrintWriter pw = response.getWriter();<br>
+	　　　　　　TPSDKResponseEx&lt;Integer&gt; result = new TPSDKResponseEx&lt;Integer&gt;();<br>
+	　　　　　　result.setResultCode(errcode);<br>	
+	　　　　　　pw.print(GSON.toJson(result));<br>
+	　　　　　　pw.close();<br>
+	　　　　　　<span style='color:#7F0055;font-weight:bold;'>return</span>;<br>
+	　　　　}<br>
+	　　　　<br> 
+	　　　　<span style='color:#3F7F5F;'>// 调用呼叫会议管理中的createConf方法</span><br>
+	　　　　TPSDKResponseEx&lt;ConferenceInfoEx&gt; createConfResponse =<br> 
+	　　　　　　ServiceFactory.getConferenceServiceEx().scheduleConfEx(confInfo);<br><br>
+
+	　　　　<span style='color:#3F7F5F;'>// 根据接口返回数据生成JSON字符串，以便于页面展示</span><br> 
+	　　　　String result = GSON.toJson(createConfResponse);<br> 
+	　　　　LOGGER.info("Finish to createConf, response is : " + result);<br><br>
+
+	　　　　<span style='color:#3F7F5F;'>// 退出登录</span><br> 
+	　　　　authorizeServiceEx.logout();<br><br> 
+
+	　　　　<span style='color:#3F7F5F;'>// 输出流</span><br> 
+	　　　　PrintWriter pw = response.getWriter();<br> 
+	　　　　pw.print(<span style="color:#0000C0;font-style:italic;">GSON</span>.toJson(result));<br> 
+	　　　　pw.close();<br> 
+	　　}<br> 
+	}
+</div>

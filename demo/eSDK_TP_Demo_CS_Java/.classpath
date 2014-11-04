@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="resources"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="lib" path="lib/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/cxf-api-2.5.10.jar"/>
+	<classpathentry kind="lib" path="lib/cxf-common-utilities-2.5.10.jar"/>
+	<classpathentry kind="lib" path="lib/cxf-rt-bindings-soap-2.5.10.jar"/>
+	<classpathentry kind="lib" path="lib/cxf-rt-bindings-xml-2.5.10.jar"/>
+	<classpathentry kind="lib" path="lib/cxf-rt-core-2.5.10.jar"/>
+	<classpathentry kind="lib" path="lib/cxf-rt-databinding-jaxb-2.5.10.jar"/>
+	<classpathentry kind="lib" path="lib/cxf-rt-frontend-jaxws-2.5.10.jar"/>
+	<classpathentry kind="lib" path="lib/cxf-rt-frontend-simple-2.5.10.jar"/>
+	<classpathentry kind="lib" path="lib/cxf-rt-transports-common-2.5.10.jar"/>
+	<classpathentry kind="lib" path="lib/cxf-rt-transports-http-2.5.10.jar"/>
+	<classpathentry kind="lib" path="lib/cxf-rt-ws-addr-2.5.10.jar"/>
+	<classpathentry kind="lib" path="lib/cxf-tools-common-2.5.10.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-1.2.16.jar"/>
+	<classpathentry kind="lib" path="lib/neethi-3.0.2.jar"/>
+	<classpathentry kind="lib" path="lib/wsdl4j-1.6.2.jar"/>
+	<classpathentry kind="lib" path="lib/xmlschema-core-2.0.3.jar"/>
+	<classpathentry kind="lib" path="lib/wstx-asl-3.2.9.jar"/>
+	<classpathentry kind="lib" path="lib/jxl.jar"/>
+	<classpathentry kind="lib" path="lib/esdk_tp_native_professional_java.jar"/>
+	<classpathentry kind="lib" path="lib/asm-3.3.1.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

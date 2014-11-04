@@ -1,0 +1,208 @@
+<div class="inoutput_param_div" style="height: 335px;">
+	<table width="100%">
+		<tr>
+			<td width="10%"><label languageTag="input"></label>
+			</td>
+			<td></td>
+			<td width="32%"></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td align="left" width="15%">
+				<font color='red'>*</font>
+				<label languageTag="confName"></label>
+			</td>
+			<td align="left">
+				<input type="text" id="confName" name="confName" value="tp bs demo">
+			</td>
+			<td align="left"><span class="span_tip" id="confNameErrTip"></span></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td align="left" width="15%">
+				<font color='red'>*</font>
+				<label languageTag="beginTime"></label>
+			</td>
+			<td align="left">
+				<input type="text" id="beginTime" name="beginTime" placeholder="yyyy-MM-dd HH:mm:ss" value="">
+			</td>
+			<td align="left"><span class="span_tip" id="beginTimeErrTip"></span></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td align="left" width="15%">
+				<font color='red'>*</font>
+				<label languageTag="duration"></label>
+			</td>
+			<td align="left">
+				<input type="text" id="duration" name="duration" value="60">
+			</td>
+			<td align="left"><span class="span_tip" id="durationErrTip"></span></td>
+		</tr>		
+		<tr>
+			<td></td>
+			<td align="left" width="15%">
+				<label languageTag="accessCode"></label>
+			</td>
+			<td align="left">
+				<input type="text" id="accessCode" name="accessCode">
+			</td>
+			<td align="left"><span class="span_tip" id="accessCodeErrTip"></span></td>
+		</tr>			
+		<tr>
+			<td></td>
+			<td align="left" width="15%">
+				<label languageTag="password"></label>
+			</td>
+			<td align="left">
+				<input type="text" id="password" name="password">
+			</td>
+			<td align="left"><span class="span_tip" id="passwordErrTip"></span></td>
+		</tr>			
+		<tr>
+			<td></td>
+			<td align="left" width="15%">
+				<label languageTag="chairmanPassword"></label>
+			</td>
+			<td align="left">
+				<input type="text" id="chairmanPassword" name="chairmanPassword">
+			</td>
+			<td align="left"><span class="span_tip" id="chairmanPasswordErrTip"></span></td>
+		</tr>	
+		<tr>
+			<td></td>
+			<td align="left" width="15%">
+				<font color='red'>*</font>
+				<label languageTag="cpResouce"></label>
+			</td>
+			<td align="left">
+				<select id="cpResouce" name="cpResouce">
+					<option value="0">无多画面</option>
+					<option value="2">2画面</option>
+					<option value="3">3画面</option>
+					<option value="4">4画面</option>
+					<option value="5">5画面</option>
+					<option value="6">6画面</option>
+					<option value="7">7画面</option>
+					<option value="8">8画面</option>
+				</select>
+			</td>
+			<td align="left"><span class="span_tip" id="cpResouceErrTip"></span></td>
+		</tr>	
+		<tr>
+			<td></td>
+			<td align="left" width="15%">
+				<label languageTag="rate"></label>
+			</td>
+			<td align="left">
+				<input type="text" id="rate" name="rate" value="1920k">
+			</td>
+			<td align="left"><span class="span_tip" id="rateErrTip"></span></td>
+		</tr>			
+		<tr>
+			<td></td>
+			<td align="left" width="15%">
+				<font color='red'>*</font>
+				<label languageTag="isRecording"></label>
+			</td>
+			<td align="left">
+				<select id="isRecording" name="isRecording">
+					<option value="0">不支持录播</option>
+					<option value="1">支持录播</option>
+				</select>
+			</td>
+			<td align="left"><span class="span_tip" id="isRecordingErrTip"></span></td>
+		</tr>			
+		<tr>
+			<td></td>
+			<td align="left" width="15%">
+				<font color='red'>*</font>
+				<label languageTag="isLiveBroadcast"></label>
+			</td>
+			<td align="left">
+				<select id="isLiveBroadcast" name="isLiveBroadcast">
+					<option value="0">不支持直播</option>
+					<option value="1">支持直播</option>
+				</select>
+			</td>
+			<td align="left"><span class="span_tip" id="isLiveBroadcastErrTip" ></span></td>
+		</tr>	
+					
+		<tr>
+		<td></td>
+		<td colspan="2" align="left">
+			<a id="scheduleConf_addSite" onclick="table_addRow(this)" class="btn_login add_icon_btn" style="float: left;margin: 15px 0 0 0;">增加会场</a>
+			
+			<table id="scheduleConf_addSite_table" style="display: none;margin-top: 40px;">
+				<thead>
+				<tr><td style="width: 100px">会场名称</td><td style="width: 100px">会场Uri</td>
+				<td style="width: 100px">会场类型</td><td>操作</td></tr>
+				</thead>
+				<tbody>
+				<tr style="display: none;">
+				<td><input type="text" value="" class="input_in_table"></td>
+				<td><input type="text" value="" class="input_in_table"> </td>
+				<td>
+					<select class="input_in_table">
+						<option value="0">无效类型</option>
+						<option value="1" selected="selected">根据会场标识自动从系统获取</option>
+						<option value="2">E1 类型会场</option>
+						<option value="3">ISDN 类型会场</option>
+						<option value="4">H.323 类型会场</option>
+						<option value="5">PSTN 类型会场</option>
+						<option value="6">4E1 类型会场</option>
+						<option value="7">SIP 类型会场</option>
+						<option value="8">VoIP SIP 类型会场</option>
+						<option value="9">VoIP H.323 类型会场</option>
+					</select>
+				</td>
+				
+				<td><a class="btn_login del_icon_btn" onclick="table_delRow(this)"></a></td></tr>
+				</tbody>
+			</table>
+			
+		</td>
+		<td></td>
+		</tr>
+	
+		<tr>
+			<td colspan="2"></td>
+			<td align="left">
+				<a id="scheduleConf" class="btn_login" style="margin-top: 15px;" languageTag="scheduleConf"></a>
+			</td>
+			<td></td>
+		</tr>
+	</table>
+</div>
+
+<div class="hr_horizontal_inoutputdiv">
+	<hr class="hr_horizontal_inoutput" noshade>
+</div>
+
+<div class="inoutput_param_div">
+	<table width="100%">
+		<tr>
+			<td width="11%"><label languageTag="output"></label>
+			</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td align="left" width="14%"><label languageTag="resultCode"></label>
+			</td>
+			<td align="left"><input type="text" id="scheduleConf_resultCode"
+				 readonly="readonly">
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td align="left" valign="top"><label languageTag="resultContext"></label>
+			</td>
+			<td align="left"><textarea type="text" id="scheduleConf_resultContext"
+					 			 readonly="readonly"></textarea>
+			</td>
+		</tr>
+	</table>
+</div>

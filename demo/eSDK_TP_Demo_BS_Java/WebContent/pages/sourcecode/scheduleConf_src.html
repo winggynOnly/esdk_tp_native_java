@@ -1,0 +1,161 @@
+<div>
+	<label style="font-weight: bold;">ScheduleConfServlet.class:</label>
+	<br><br>
+	<label style="font-weight: bold;"><img src="pic/description.jpg"></label>
+	<br><br>
+	<label style="font-weight: bold;" languageTag="sourceCodeDesc"></label>
+	<br><br>
+	<span style='color:#7F0055;font-weight:bold;'>package</span><span style='color:black;'> com.huawei.esdk.tp.demo.servlet;</span>
+	<br><br>
+    <span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> java.io.IOException;</span>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> java.io.PrintWriter;</span>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> java.util.ArrayList;</span>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> java.util.List;</span>
+	<br>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> javax.servlet.ServletException;</span>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> javax.servlet.http.HttpServlet;</span>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> javax.servlet.http.HttpServletRequest;</span>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> javax.servlet.http.HttpServletResponse;</span>
+	<br>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> org.apache.log4j.Logger;</span>
+	<br>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> com.google.gson.Gson;</span>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> com.google.gson.internal.StringMap;</span>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> com.huawei.esdk.tp.demo.factory.ServiceFactory;</span>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> com.huawei.esdk.tp.demo.utils.DateUtils;</span>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> com.huawei.esdk.tp.demo.utils.DurationUtils;</span>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> com.huawei.esdk.tp.demo.utils.PropertiesUtils;</span>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> com.huawei.esdk.tp.professional.local.authentication.AuthorizeServiceEx;</span>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> com.huawei.esdk.tp.professional.local.bean.ConferenceInfoEx;</span>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> com.huawei.esdk.tp.professional.local.bean.SiteInfoEx;</span>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> com.huawei.esdk.tp.professional.local.bean.TPSDKResponseEx;</span>
+	<br><br>
+	<span style='color:#3F5FBF;'>
+		/**<br>
+		 * 会议处理类<br> 
+		 * 用于预约会议<br> 
+	 	 * <br> 
+	 	 * @author　xxxxxx<br> 
+	 	 * @see　[无]<br> 
+	 	 * @since　[eSDK TP V100R003C30]<br> 
+	 	 */</span><br> 
+	<span style='color:#7F0055;font-weight:bold;'>public class</span> ScheduleConfServlet <span style='color:#7F0055;font-weight:bold;'>extends</span> HttpServlet<br> 
+	{<br> 
+	　　<span style='color:#3F5FBF;'>
+		/**<br> 
+	　　  * 序列号<br> 
+	　　  */</span><br> 
+	　　<span style='color:#7F0055;font-weight:bold;'>private static final long</span> <span style="color:#0000C0;font-style:italic;">serialVersionUID</span> = 5053679104100767687L;<br> 
+	　　<br> 
+	　　<span style='color:#3F5FBF;'>
+		/**<br> 
+	　　 * log日志对象<br> 
+	　　 */</span><br> 
+	　　<span style='color:#7F0055;font-weight:bold;'>private static final</span> Logger <span style="color:#0000C0;font-style:italic;">LOGGER</span> = Logger.getLogger(ScheduleConfServlet.<span style='color:#7F0055;font-weight:bold;'>class</span>);<br> 
+	　　<br> 
+	　　<span style='color:#3F5FBF;'>
+		/**<br> 
+	　　 * Gson，用于进行对象和json之间的转换<br> 
+	　　 */</span><br> 
+	　　<span style='color:#7F0055;font-weight:bold;'>private static final</span> Gson <span style="color:#0000C0;font-style:italic;">GSON</span> = <span style='color:#7F0055;font-weight:bold;'>new</span> Gson();<br> 
+	　　<br> 
+	　　<span style="color:#646464;">@Override</span><br> 
+	　　<span style='color:#7F0055;font-weight:bold;'>protected void</span> doPost(HttpServletRequest request, HttpServletResponse response)<br> 
+	　　　　<span style='color:#7F0055;font-weight:bold;'>throws</span> ServletException, IOException<br> 
+	　　{<br> 
+	　　　　<span style='color:#3F7F5F;'>// 获取页面入参</span><br> 
+	　　　　String confName = request.getParameter(<span style="color:#0000C0;">"confName"</span>);<br>  
+	　　　　String beginTime = request.getParameter(<span style="color:#0000C0;">"beginTime"</span>);<br>
+	　　　　String duration = request.getParameter(<span style="color:#0000C0;">"duration"</span>);<br>
+	　　　　String accessCode = request.getParameter(<span style="color:#0000C0;">"accessCode"</span>);<br>
+	　　　　String password = request.getParameter(<span style="color:#0000C0;">"password"</span>);<br>
+	　　　　String cpResouce = request.getParameter(<span style="color:#0000C0;">"cpResouce"</span>);<br>
+	　　　　String rate = request.getParameter(<span style="color:#0000C0;">"rate"</span>);<br>
+	　　　　String isRecording = request.getParameter(<span style="color:#0000C0;">"isRecording"</span>);<br>
+	　　　　String isLiveBroadcast = request.getParameter(<span style="color:#0000C0;">"isLiveBroadcast"</span>);<br>
+	　　　　String chairmanPassword = request.getParameter(<span style="color:#0000C0;">"chairmanPassword"</span>);<br>
+	　　　　String sitesStr = request.getParameter(<span style="color:#0000C0;">"sitesStr"</span>);<br>
+	　　　　<br> 
+
+	　　　　List&lt;StringMap&lt;String&gt;&gt; siteInfos = GSON.fromJson(sitesStr, <span style='color:#7F0055;font-weight:bold;'>new</span> ArrayList&lt;StringMap&lt;String&gt;&gt;().getClass()); 
+	　　　　<br><br>
+		
+	　　　　<span style='color:#3F7F5F;'>// 拼装请求bean</span><br>
+	　　　　ConferenceInfoEx confInfo = <span style='color:#7F0055;font-weight:bold;'>new</span> ConferenceInfoEx();<br> 
+	　　　　confInfo.setName(confName);<br> 
+	　　　　confInfo.setBeginTime(DateUtils.stringToDate(beginTime,"yyyy-MM-dd HH:mm:ss"));<br>  
+	　　　　confInfo.setDuration(DurationUtils.durationInt2dur(Integer.parseInt(duration)));<br> 
+	　　　　confInfo.setAccessCode(accessCode);<br>  
+	　　　　confInfo.setPassword(password);<br> 
+	　　　　confInfo.setChairmanPassword(chairmanPassword);<br>  
+	　　　　confInfo.setCpResouce(Integer.parseInt(cpResouce));<br> 
+	　　　　confInfo.setIsLiveBroadcast(Integer.parseInt(isLiveBroadcast));<br>  
+	　　　　confInfo.setIsRecording(Integer.parseInt(isRecording));<br> 
+	　　　　confInfo.setRate(rate)<br><br>  
+
+	　　　　List&lt;SiteInfoEx&gt; sites = GSON.fromJson(sitesStr, <span style='color:#7F0055;font-weight:bold;'>new</span> ArrayList&lt;SiteInfoEx&gt;().getClass()); 
+	　　　　<br><br>
+	　　　　<span style='color:#7F0055;font-weight:bold;'>for</span>(StringMap<String> stringMap : siteInfos) 
+	　　　　<br>
+	　　　　{<br> 
+	　　　　　　SiteInfoEx siteInfoEx = <span style='color:#7F0055;font-weight:bold;'>new</span> SiteInfoEx();<br>
+	　　　　　　siteInfoEx.setName(stringMap.get("name"));<br>
+	　　　　　　siteInfoEx.setType(Integer.parseInt(stringMap.get("type")));<br>
+	　　　　　　siteInfoEx.setUri(stringMap.get("uri"));<br>
+	　　　　　　sites.add(siteInfoEx);<br>
+	　　　　}<br><br>	
+	
+	　　　　confInfo.setSites(sites);<br><br> 
+	
+	　　　　<span style='color:#3F7F5F;'>// 调用业务接口前需要鉴权</span><br>
+	　　　　AuthorizeServiceEx authorizeServiceEx = ServiceFactory.getAuthorizeServiceEx();<br>
+	　　　　Integer errcode = authorizeServiceEx.login(PropertiesUtils.getValue("userName"),<br>
+	　　　　 　　PropertiesUtils.getValue("password"));<br><br> 
+
+	　　　　<span style='color:#7F0055;font-weight:bold;'>if</span>(0 != errcode)<br> 
+	　　　　{<br> 
+	　　　　　　<span style='color:#3F7F5F;'>// 输出流</span><br> 
+	　　　　　　PrintWriter pw = response.getWriter();<br>
+	　　　　　　TPSDKResponseEx&lt;Integer&gt; result = new TPSDKResponseEx&lt;Integer&gt;();<br>
+	　　　　　　result.setResultCode(errcode);<br>	
+	　　　　　　pw.print(GSON.toJson(result));<br>
+	　　　　　　pw.close();<br>
+	　　　　　　<span style='color:#7F0055;font-weight:bold;'>return</span>;<br>
+	　　　　}<br>
+	　　　　<br> 
+	　　　　<span style='color:#3F7F5F;'>// 调用呼叫会议管理中的createConf方法</span><br>
+	　　　　TPSDKResponseEx&lt;ConferenceInfoEx&gt; createConfResponse =<br> 
+	　　　　　　ServiceFactory.getConferenceServiceEx().scheduleConfEx(confInfo);<br><br>
+
+	　　　　<span style='color:#3F7F5F;'>// 根据接口返回数据生成JSON字符串，以便于页面展示</span><br> 
+	　　　　String result = GSON.toJson(createConfResponse);<br> 
+	　　　　LOGGER.info("Finish to createConf, response is : " + result);<br><br>
+
+	　　　　<span style='color:#3F7F5F;'>// 退出登录</span><br> 
+	　　　　authorizeServiceEx.logout();<br><br> 
+
+	　　　　<span style='color:#3F7F5F;'>// 输出流</span><br> 
+	　　　　PrintWriter pw = response.getWriter();<br> 
+	　　　　pw.print(<span style="color:#0000C0;font-style:italic;">GSON</span>.toJson(result));<br> 
+	　　　　pw.close();<br> 
+	　　}<br> 
+	}
+</div>
