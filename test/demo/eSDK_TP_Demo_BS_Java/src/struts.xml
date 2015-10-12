@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+    
+    <package name="common" extends="json-default">
+            <interceptors>
+            <interceptor name="login"
+                class="com.huawei.esdk.demo.interceptor.LoginInterceptor" />
+            <interceptor-stack name="stack-with-login">
+                <interceptor-ref name="login" />
+                <interceptor-ref name="defaultStack" />
+            </interceptor-stack>
+        </interceptors>
+
+        <default-interceptor-ref name="stack-with-login" />
+
+        <global-results>
+            <result name="login" type="redirect">/login.jsp</result>
+        </global-results>
+    </package>
+
+	<package name="action" namespace="/user" extends="common">
+		<action name="login" class="loginAction" method="login">
+			<result name="success" type="redirectAction">
+			         <param name="namespace">/user</param>
+                    <param name="actionName">main</param>
+		      </result>
+			<result name="error" type="redirect">/login.jsp</result>
+		</action>
+		<action name="logout" class="loginAction" method="logout">
+			<result name="success" type="redirect"> /login.jsp</result>
+		</action>
+        <action name="main">
+            <result name="success" >
+			     /WEB-INF/JSP/index.jsp
+            </result>
+        </action>
+        <action name="changeLanguage" class="loginAction" method="changeLanguage">
+            <result name="success">/login.jsp</result>
+        </action>
+		<!-- 会场控制 -->
+		<action name="siteCtrl" class="com.huawei.esdk.demo.action.SiteCtrlAction">
+		</action>
+
+	</package>
+	
+	<package name="confMgr" namespace="/confMgr" extends="common">
+		<action name="confMgr" class="confMgrAction" />
+		<action name="jumpScheduleConf" class="confMgrAction" method="jumpScheduleConf">
+			<result name="newConf"> /WEB-INF/JSP/newConf.jsp</result>
+		</action>
+		<action name="jumpSiteInfo" class="confMgrAction" method="jumpSiteInfo">
+
+		</action>
+		<action name="jumpProlongTime" class="confMgrAction" method="jumpProlongTime">
+			<result name="prolongInfo">/WEB-INF/JSP/prolongConf.jsp</result>
+		</action>
+		<action name="jumpAddSite" class="confMgrAction" method="jumpAddSite">
+			<result name="addSite"> /WEB-INF/JSP/addSiteToConf.jsp</result>
+		</action>
+		
+		<action name="addSiteToConf" class="confMgrAction" method="addSiteToConf">
+			<result name="success"> /WEB-INF/JSP/addSiteToConf.jsp</result>
+		</action>
+		
+		<action name="connectSites" class="confMgrAction" method="connectSites">
+			<result name="success"> </result>
+		</action>
+		
+		<action name="queryConfInfo" class="confMgrAction" method="queryConfInfo">
+			<result name="success" type="json">
+			         <param name="root">confInfoList</param>
+			 </result>
+		</action>
+		
+		<action name="selectConfById" class="confMgrAction" method="selectConfById">
+			<result name="success" type="json">
+			         <param name="root">confInfoList</param>
+			 </result>
+			 <result name="recurrence" type="json">
+			         <param name="root">recurrenceConfInfo</param>
+			 </result>
+		</action>
+		
+	</package>
+
+
+	<package name="conf" namespace="/confCtrl" extends="common">
+		<action name="queryConfById" class="confCtrlAction" method="queryConfById">
+			<result name="success" type="json">
+				<param name="root">confInfo</param>
+			</result>
+			<result name="error" type="json">
+			     <param name="root">resultCode</param>
+			</result>
+		</action>
+
+		<action name="setBroadcastSite" class="confCtrlAction" method="setBroadcastSite">
+			<result name="success" type="json">
+				<param name="root">resultCode</param>
+			</result>
+			<result name="error" type="json"></result>
+		</action>
+
+		<action name="setSitesQuiet" class="confCtrlAction" method="setSitesQuiet">
+			<result name="success" type="json">
+				<param name="root">resultCode</param>
+			</result>
+			<result name="error" type="json"></result>
+		</action>
+		<action name="setSitesMute" class="confCtrlAction" method="setSitesMute">
+			<result name="success" type="json">
+				<param name="root">resultCode</param>
+			</result>
+			<result name="error" type="json"></result>
+		</action>
+		<action name="setBroadcastContinuousPresence" class="confCtrlAction"
+			method="setBroadcastContinuousPresence">
+			<result name="success" type="json">
+				<param name="root">resultCode</param>
+			</result>
+			<result name="error" type="json"></result>
+		</action>
+		<action name="setVideoSource" class="confCtrlAction" method="setVideoSource">
+			<result name="success" type="json">
+				<param name="root">resultCode</param>
+			</result>
+			<result name="error" type="json"></result>
+		</action>
+		<action name="querySiteStatus" class="confCtrlAction" method="querySiteStatus">
+			<result name="success" type="json">
+				<param name="root">siteInfo</param>
+			</result>
+			<result name="error" type="json"></result>
+		</action>
+		<action name="setContinuousPresence" class="confCtrlAction"
+			method="setContinuousPresence">
+			<result name="success" type="json">
+				<param name="root">resultCode</param>
+			</result>
+			<result name="error" type="json"></result>
+		</action>
+		
+        <action name="queryConfId" class="confCtrlAction"
+            method="queryConfId">
+            <result name="success" type="json">
+                <param name="root">confIds</param>
+            </result>
+            <result name="error" type="json"></result>
+        </action>
+
+	</package>
+	<constant name="struts.custom.i18n.resources" value="message"></constant>
+</struts> 

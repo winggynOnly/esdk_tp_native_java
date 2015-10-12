@@ -1,0 +1,25 @@
+@import url("ligerui-common.css");
+@import url("ligerui-dialog.css");
+@import url("ligerui-form.css");
+@import url("ligerui-grid.css");
+@import url("ligerui-layout.css");
+@import url("ligerui-menu.css");
+@import url("ligerui-tab.css");
+@import url("ligerui-tree.css");
+
+.l-topmenu{ margin:0; padding:0; height:31px; line-height:31px; background:url('../images/top.jpg') repeat-x bottom;  position:relative; border-top:1px solid #1D438B;  }
+.l-topmenu-logo{ color:#E7E7E7; padding-left:35px; line-height:26px;background:url('../images/topicon.gif') no-repeat 10px 5px;}
+.l-topmenu-welcome{  position:absolute; height:24px; line-height:24px;  right:30px; top:2px;color:#070A0C;}
+.l-topmenu-welcome a{ color:#E7E7E7; text-decoration:underline}
+.l-button-button {width:80px; margin-left:15px;BORDER-LEFT:  1px solid;/*左边框*/
+BORDER-RIGHT:  1px solid;/*右边框*/
+BORDER-TOP:  1px solid;/*上边框*/
+BORDER-BOTTOM:  1px solid;/*下边框*/
+PADDING-LEFT: 12px;/*左间隙*/
+PADDING-RIGHT: 12px; /*右间隙*/
+PADDING-TOP: 2px;/*上间隙*/
+PADDING-BOTTOM: 2px;/*下间隙*/
+FONT-SIZE: 12px;/*字号*/
+CURSOR: hand;/*光标类型*/
+COLOR: #000000;/*字色*/
+}

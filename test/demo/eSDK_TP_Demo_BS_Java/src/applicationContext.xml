@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd
+		http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+">
+	<import resource="classpath*:META-INF/cxf/cxf.xml"/>
+	<import resource="classpath*:META-INF/cxf/cxf-extension-soap.xml"/>
+	<import resource="classpath*:META-INF/cxf/cxf-servlet.xml"/>
+	<import resource="classpath:services.xml"/>
+    <!-- 用户action -->
+	<bean id="loginAction" class="com.huawei.esdk.demo.action.LoginAction">
+	</bean>
+	
+	  <!-- 预约会议action -->
+	<bean id="confMgrAction" class="com.huawei.esdk.demo.action.ConfMgrAction">
+	</bean>
+	
+	<!-- 会场控制action -->
+	<bean id="siteCtrlAction" class="com.huawei.esdk.demo.action.SiteCtrlAction">
+	</bean>
+    <!-- 会议控制 -->
+    <bean id="confCtrlAction" class="com.huawei.esdk.demo.action.ConfCtrlAction">
+    </bean>
+	
+</beans>
